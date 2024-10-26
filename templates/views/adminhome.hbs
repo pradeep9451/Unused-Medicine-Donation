@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+    <title>Admin Home</title>
+    {{> header}}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .navbar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar li {
+            display: inline;
+            margin: 0 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: inline-block;
+        }
+        .navbar a:hover {
+            background-color: #45a049;
+        }
+        /* Slider Container */
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            margin: 20px auto;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        /* Slider Images */
+        .slider-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slider-images img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        /* Navigation Buttons */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 50%;
+        }
+        .prev {
+            left: 10px;
+        }
+        .next {
+            right: 10px;
+        }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-button {
+                font-size: 18px;
+                padding: 8px;
+            }
+        }
+        @media (max-width: 480px) {
+            .nav-button {
+                font-size: 16px;
+                padding: 6px;
+            }
+            .navbar li {
+                display: block;
+                margin: 5px 0;
+            }
+            .navbar a {
+                display: block;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+       {{#if message}}
+    <script>
+      alert("{{message}}");
+    </script>
+  {{/if}}
+
+    
+    {{> adminnav}}
+
+    <h1 id="bodyh1">Donate medicine, save a life.</h1>
+
+    <div class="slider-container">
+        <div class="slider-images" id="slider-images">
+            <img src="/image/medicine.jpg" alt="Image 1">
+            <img src="/image/donation.jpg" alt="Image 2">
+            <img src="/image/medications.jpg" alt="Image 3">
+        </div>
+        <button class="nav-button prev" onclick="prevSlide()">&#10094;</button>
+        <button class="nav-button next" onclick="nextSlide()">&#10095;</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            const slides = document.getElementById('slider-images');
+            const totalSlides = slides.children.length;
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Optional: Auto slide
+        setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    </script>
+    
+    {{> footer}}
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+    <title>Available Medicines</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .filter-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .filter-container input {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #31655f;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            thead, tbody {
+                display: block;
+            }
+
+            tbody {
+                max-height: 400px;
+                overflow-y: auto;
+            }
+
+            th, td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            th {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+
+            td {
+                text-align: left;
+                padding-left: 50%;
+                position: relative;
+                border: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 10px;
+                font-weight: bold;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    {{> header}}
+    {{> usernav}}
+
+    <h1>Available Medicines</h1>
+
+    <div class="filter-container">
+        <input type="text" id="searchInput" placeholder="Search for medicines by name...">
+        Expired Medicines:
+        <input type="date" id="startDate" placeholder="Show Expired Medicines by Date">
+        Not Expired Medicines:
+        <input type="date" id="endDate" placeholder="Show Non-Expired Medicines by Date">
+    </div>
+
+    <table id="medicineTable">
+        <thead>
+            <tr>
+                <th>Medicine Name</th>
+                <th>Medicine Serial No.</th>
+                <th>Manufacture Date</th>
+                <th>Expiry Date</th>
+                <th>Quantity</th>
+                <th>Donor Name</th>
+                <th>Donor Email</th>
+                <th>Donor Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each x}}
+                <tr>
+                    <td data-label="Medicine Name">{{medicineName}}</td>
+                    <td data-label="Medicine Serial No.">{{medicineSerial}}</td>
+                    <td data-label="Manufacture Date">{{manufactureDate}}</td>
+                    <td data-label="Expiry Date">{{expiryDate}}</td>
+                    <td data-label="Quantity">{{quantity}}</td>
+                    <td data-label="Donor Name">{{donorName}}</td>
+                    <td data-label="Donor Email">{{email}}</td>
+                    <td data-label="Donor Contact">{{contact}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', filterTable);
+        document.getElementById('startDate').addEventListener('change', filterTable);
+        document.getElementById('endDate').addEventListener('change', filterTable);
+
+        function filterTable() {
+            var searchInput = document.getElementById('searchInput').value.toLowerCase();
+            var startDate = document.getElementById('startDate').value;
+            var endDate = document.getElementById('endDate').value;
+
+            var rows = document.querySelectorAll('#medicineTable tbody tr');
+
+            rows.forEach(function(row) {
+                var medicineName = row.querySelector('td[data-label="Medicine Name"]').textContent.toLowerCase();
+                var expiryDate = row.querySelector('td[data-label="Expiry Date"]').textContent;
+                var nameMatch = medicineName.indexOf(searchInput) > -1;
+                var expiryDateMatch = true;
+
+                if (startDate) {
+                    expiryDateMatch = new Date(expiryDate) <= new Date(startDate);
+                }
+
+                if (endDate) {
+                    expiryDateMatch = expiryDateMatch && new Date(expiryDate) >= new Date(endDate);
+                }
+
+                if (nameMatch && expiryDateMatch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+{{> footer}}
+</html>

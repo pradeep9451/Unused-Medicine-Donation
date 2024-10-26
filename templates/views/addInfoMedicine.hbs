@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+    <title>Add Medicine Info.</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 0;
+            margin: 0;
+        }
+        h1 {
+            color: #31655f;
+            text-align: center;
+            margin-top: 20px;
+        }
+        form {
+            background-image: url("image/login-bg.jpg");
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 1400px; /* Increased form width */
+            margin: 50px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        input[type="tel"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            background-color: #31655f;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #254d43;
+        }
+
+        /* Media Queries for Mobile */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            form {
+                padding: 15px;
+                max-width: 100%; /* Allow full width on smaller screens */
+            }
+            input[type="text"],
+            input[type="date"],
+            input[type="number"],
+            input[type="tel"] {
+                width: 100%;
+            }
+            button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+    {{> header}}
+</head>
+<body>
+    {{> adminnav}}
+    <h1>Add New Medicine Information</h1>
+    <form action="/service" method="POST">
+        <label for="serialNumber">Serial Number:</label>
+        <input type="text" id="serialNumber" name="SERIAL NUMABER" placeholder="Enter Serial Number" required>
+        
+        <label for="medicineName">Medicine Name:</label>
+        <input type="text" id="medicineName" name="MEDICINE NAME" placeholder="Enter Medicine Name" required>
+
+        <label for="use">Use:</label>
+        <input type="text" id="use" name="USE" placeholder="Enter Use/Usage">
+
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" name="COMPANY NAME" placeholder="Enter Company Name" required>
+
+        <label for="manufactureDate">Manufacture Date:</label>
+        <input type="date" id="manufactureDate" name="MANUFACTURE DATE" required>
+
+        <label for="expiryDate">Expiry Date:</label>
+        <input type="date" id="expiryDate" name="EXPIRY DATE" required>
+
+        <label for="contact">Contact:</label>
+        <input type="tel" id="contact" name="CONTACT" placeholder="Enter Contact Info" pattern="[0-9]{10}" title="Please enter a 10-digit phone number">
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+{{> footer}}
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Donation</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url("image/login-bg.jpg"); /* Add your image path here */
+            background-size: cover; /* Cover the entire background */
+            background-repeat: no-repeat; /* Prevent the background from repeating */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Main Content Styling */
+        .content {
+            flex: 1;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #004643;
+            background-image: url('image/donate.jpg'); /* Add your image path here */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Overlay Effect for Better Text Visibility */
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 70, 67, 0.8);
+            z-index: -1;
+        }
+
+        /* Adjust spacing and layout for the footer */
+        footer .footer-section {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px 0;
+        }
+
+        footer .footer-section div {
+            flex: 1;
+            margin: 10px 20px;
+            min-width: 200px; /* Ensures sections don’t get too narrow */
+        }
+
+        footer .contact-info, footer .about, footer .social-media-icons {
+            flex: 1;
+            margin: 20px;
+        }
+
+        footer .contact-info div {
+            margin-bottom: 10px;
+        }
+
+        footer h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        footer p, footer a {
+            font-size: 14px;
+            color: #fff;
+            line-height: 1.6;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact Info */
+        footer .contact-info div {
+            margin-bottom: 10px;
+        }
+
+        footer .contact-info i {
+            margin-right: 10px;
+        }
+
+        /* Social Media Icons */
+        footer .social-media-icons {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        footer .social-media-icons h4 {
+            margin-bottom: 10px;
+        }
+
+        footer .social-media-icons a {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        footer .social-media-icons i {
+            font-size: 24px;
+            color: white;
+            margin-right: 5px;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-media-icons a:hover i {
+            color: #2A9D8F;
+        }
+
+        /* Registered Logos */
+        footer .registered-logos img {
+            max-width: 100px;
+            margin-right: 15px;
+        }
+
+        footer iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            footer .footer-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            footer .about,
+            footer .contact-info,
+            footer .social-media-icons {
+                margin: 10px 0;
+            }
+
+            footer .social-media-icons {
+                align-items: center;
+            }
+
+            footer .social-media-icons a {
+                margin-bottom: 10px;
+                width: 100%;
+                text-align: center;
+            }
+
+            footer .social-media-icons i {
+                margin-right: 5px;
+            }
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 480px) {
+            footer h4 {
+                font-size: 16px;
+            }
+
+            footer p, footer a {
+                font-size: 12px;
+            }
+
+            footer .social-media-icons i {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <!-- Main content here -->
+    </div>
+
+    <footer>
+        <div class="footer-section">
+            <!-- About Section -->
+            <div class="about">
+                <h4>About Us</h4>
+                <p>We are committed to reducing medicine waste by connecting donors and people in need. Our platform enables the donation of unused medicines in a safe and organized way.
+                    At Unused Medicine Donation, we believe that unused medicine can save lives. We collect medicine from people who no longer need it and give it to those who do. By doing this, we help people who cannot afford the medicine they need to stay healthy.
+                </p>
+            </div>
+
+            <!-- Contact Info Section -->
+            <div class="contact-info">
+                <h4>Contact Us</h4>
+                <div><i class="fas fa-phone"></i> +91-123-4567890</div>
+                <div><i class="fas fa-envelope"></i> info@medicinedonation.com</div>
+                <div>
+                    <!-- Clickable map link to Google Maps -->
+                    <a href="https://www.google.com/maps/place/A.+C.+Patil+College+of+Engineering/@19.030557,73.0589531,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7c24052e100f3:0xb6e3e4259b43a898!8m2!3d19.030557!4d73.061528!16s%2Fm%2F0cp3kqb?entry=ttu&g_ep=EgoyMDI0MTAwMi4xIKXMDSoASAFQAw%3D%3D" target="_blank" style="color: white; text-decoration: none;">
+                        <i class="fas fa-map-marker-alt"></i> View Map of A.C. Patil College of Engineering
+                    </a>
+                </div>
+
+                <!-- Embedded Google Map -->
+                <div style="margin-top: 20px;">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.3285891491735!2d73.0589531!3d19.030557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c24052e100f3%3A0xb6e3e4259b43a898!2sA.+C.+Patil+College+of+Engineering!5e0!3m2!1sen!2sin!4v1696493227"
+                        width="auto" 
+                        height="200" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="social-media-icons">
+                <h4>Follow Us</h4>
+                <a href="https://www.facebook.com/pradeepyadavniyauj" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="https://www.instagram.com/pradeep_yadav_niyauj" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://www.twitter.com/pseriescartoon1" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="https://www.linkedin.com/in/pradeep9451" target="_blank"><i class="fab fa-linkedin-in"></i> Linkedin</a>
+                <a href="https://www.youtube.com/@PSeriesCartoonPradeepYadav" target="_blank"><i class="fab fa-youtube"></i> Youtube</a>
+            </div>
+
+        </div>
+
+        <!-- Legal Section -->
+        <div class="registered-logos">
+            <p>&copy; 2024 Unused Medicine Donation Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>

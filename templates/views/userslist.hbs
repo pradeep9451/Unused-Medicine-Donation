@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+  <title>User List</title>
+  <style>
+    /* Internal CSS for styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto; /* Allows horizontal scrolling on small screens */
+      margin: 20px auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #ddd;
+    }
+
+    .delete-btn {
+      color: white;
+      background-color: #e74c3c;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 24px;
+      }
+      table {
+        font-size: 14px;
+      }
+      .delete-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 20px;
+      }
+      table {
+        font-size: 12px;
+      }
+      .delete-btn {
+        padding: 3px 6px;
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+{{> header}}
+<body>
+  {{> adminnav}}
+  <h1>User List</h1>
+  
+  {{#if users.length}}
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Username</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each users}}
+            <tr>
+              <td>{{this.name}}</td>
+              <td>{{this.email}}</td>
+              <td>{{this.phone}}</td>
+              <td>{{this.username}}</td>
+              <td>
+                <!-- Delete button -->
+                <form action="/delete-user/{{this._id}}" method="POST" style="display: inline;">
+                  <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{else}}
+    <p style="text-align: center; color: #666;">No users found.</p>
+  {{/if}}
+</body>
+{{> footer}}
+</html>

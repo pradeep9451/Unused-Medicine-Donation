@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+    <title>Medicine Data Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #searchSerialInput, #searchNameInput {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        @media (max-width: 768px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            th, td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            th {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr {
+                display: block;
+                margin-bottom: 15px;
+                position: relative;
+            }
+            td {
+                display: block;
+                text-align: right;
+                position: relative;
+                padding-left: 50%;
+                box-sizing: border-box;
+            }
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 45%;
+                padding-left: 10px;
+                font-weight: bold;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+{{> header}}
+<body>
+    {{> usernav}}
+
+    <h2>Medicine Data Table</h2>
+    <input type="text" id="searchSerialInput" placeholder="Search by serial number...">
+    <input type="text" id="searchNameInput" placeholder="Search by medicine name...">
+
+    <table id="medicineTable">
+        <thead>
+            <tr>
+                <th>Serial No.</th>
+                <th>Medicine Name</th>
+                <th>Use</th>
+                <th>Company Name</th>
+                <th>Manufacture Date</th>
+                <th>Expiry Date</th>
+                <th>Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each medicines}}
+            <tr>
+                <td data-label="Serial No.">{{serialNumber}}</td>
+                <td data-label="Medicine Name">{{medicineName}}</td>
+                <td data-label="Use">{{use}}</td>
+                <td data-label="Company Name">{{companyName}}</td>
+                <td data-label="Manufacture Date">{{manufactureDate}}</td>
+                <td data-label="Expiry Date">{{expiryDate}}</td>
+                <td data-label="Contact">{{contact}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('searchSerialInput').addEventListener('input', filterTable);
+        document.getElementById('searchNameInput').addEventListener('input', filterTable);
+
+        function filterTable() {
+            let serialFilter = document.getElementById('searchSerialInput').value.toLowerCase();
+            let nameFilter = document.getElementById('searchNameInput').value.toLowerCase();
+            let rows = document.querySelectorAll('#medicineTable tbody tr');
+
+            rows.forEach(row => {
+                let serialNo = row.querySelector('td[data-label="Serial No."]').textContent.toLowerCase();
+                let medicineName = row.querySelector('td[data-label="Medicine Name"]').textContent.toLowerCase();
+
+                let serialMatch = serialNo.indexOf(serialFilter) > -1;
+                let nameMatch = medicineName.indexOf(nameFilter) > -1;
+
+                if (serialMatch && nameMatch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+{{> footer}}
+</html>

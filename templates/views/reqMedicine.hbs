@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+    <title>Request Medicine Form</title>
+    <style>
+        /* Basic styling for the form */
+        body {
+            
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            background-image: url("image/login-bg.jpg");
+            max-width: 600px;
+            margin: 0 auto;
+            background: #98c7dc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin: 0 0 20px 0;
+            font-size: 1.5em;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .form-group button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px;
+            }
+
+            .form-group input, .form-group textarea, .form-group select {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .form-group button {
+                padding: 12px 20px;
+                font-size: 18px;
+            }
+        }
+    </style>
+   
+    <!-- JavaScript to check file size immediately after selection -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('prescription');
+
+            fileInput.addEventListener('change', function() {
+                const file = fileInput.files[0];
+                const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+
+                if (file && file.size > maxSize) {
+                    alert('The file size should not exceed 2MB. Please choose a smaller file.');
+                    fileInput.value = ''; // Clear the input field if the file is too large
+                }
+            });
+        });
+    </script>
+</head>
+{{> header}}
+<body>
+    {{> usernav}}
+
+    <div class="form-container">
+        <h2>Request Medicine Form</h2>
+        <form action="request" method="post" enctype="multipart/form-data">
+            <!-- Name Field -->
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <!-- Phone Number Field -->
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <!-- Medicine Name Field -->
+            <div class="form-group">
+                <label for="medicine">Medicine Name:</label>
+                <input type="text" id="medicine" name="medicine" required>
+            </div>
+
+            <!-- Quantity Field -->
+            <div class="form-group">
+                <label for="quantity">Quantity Required:</label>
+                <input type="number" id="quantity" name="quantity" min="1" required>
+            </div>
+
+            <!-- Prescription Photo Field -->
+            <div class="form-group">
+                <label for="prescription">Upload Prescription Photo:</label>
+                <input type="file" id="prescription" name="prescription" accept="image/*" required>
+            </div>
+
+            <!-- Additional Details -->
+            <div class="form-group">
+                <label for="details">Additional Details or Comments:</label>
+                <textarea id="details" name="details" rows="4"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <button type="submit">Submit Request</button>
+            </div>
+        </form>
+    </div>
+</body>
+{{> footer}}
+</html>

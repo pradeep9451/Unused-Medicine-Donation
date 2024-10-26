@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Navigation Styling */
+        nav {
+            background-color: #1b6a61; /* Changed color to match your example */
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 15px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #21867A;
+            color: #fff;
+        }
+
+        /* Submenu Styling */
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #2A9D8F;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        nav li:hover .submenu {
+            display: block;
+        }
+
+        .submenu li {
+            margin: 0;
+        }
+
+        .submenu a {
+            padding: 10px;
+            display: block;
+            white-space: nowrap;
+        }
+
+        /* Hamburger Menu for Mobile */
+        .hamburger {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 20px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                display: none;
+                width: 100%;
+                background-color: #2A9D8F;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav li {
+                width: 100%;
+            }
+
+            .submenu {
+                position: static;
+                box-shadow: none;
+            }
+
+            .submenu a {
+                padding-left: 20px;
+            }
+
+            nav a {
+                width: 100%;
+                padding: 15px;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <span class="hamburger" onclick="toggleMenu()">&#9776;</span>
+        <ul id="navLinks">
+            <li><a href="/">Home</a></li>
+            <li><a href="/donateMedicine">Donate Medicine</a></li>
+            <li><a href="/donerAvlMedicine">Available Medicine</a></li>
+            {{!-- <li><a href="/infoMedicine">Medicine Info.</a></li> --}}
+            <li><a href="/Donerlogout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

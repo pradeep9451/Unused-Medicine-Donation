@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+     {{#if message}}
+    <script>
+      alert("{{message}}");
+    </script>
+  {{/if}}
+    {{> header}}
+    {{> navbar}}
+    {{> body}}
+    {{> footer}}
+</body>
+</html>

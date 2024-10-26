@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+    <title>User Reviews for Medicine Donation</title>
+    <style>
+        /* Internal CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .review-section {
+            background-image: url("image/login-bg.jpg");
+            max-width: 600px;
+            margin: 20px auto;
+            background: #98c7dc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 1.8em;
+        }
+        .review-form {
+            margin-bottom: 30px;
+        }
+        .review-form h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        .review-form input, .review-form textarea, .review-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .review-form button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%; /* Make button full width */
+        }
+        .review-form button:hover {
+            background-color: #0056b3;
+        }
+        /* Review Display Styling */
+        #reviews .review {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .review-header {
+            font-size: 1.1em;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+        }
+        .rating {
+            color: #ff9800;
+            font-size: 1.1em;
+        }
+        .review-body {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+        small {
+            color: #888;
+        }
+        input {
+    pointer-events: none; /* This would make the input unclickable */
+      }
+
+        
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 1.5em;
+            }
+            .review-form h3 {
+                font-size: 1.3em;
+            }
+            .review-form input, .review-form textarea, .review-form select {
+                font-size: 16px;
+            }
+            .review-form button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+{{> header}}
+<body>
+    {{> usernav}}
+    <div class="review-section">
+        <h2>User Reviews for Medicine Donation</h2>
+
+        <!-- Review Form -->
+        <div class="review-form">
+            <h3>Leave a Review</h3>
+            <form id="reviewForm">
+                <input type="text" id="username" placeholder="Your Name" required>
+                <textarea id="comment" rows="4" placeholder="Your Review" required></textarea>
+                <label for="rating">Rating:</label>
+                <select id="rating" required>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="1">⭐</option>
+                </select>
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+
+        <!-- Display Reviews -->
+        <div id="reviews"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            // Fetch current user data to pre-fill the username field
+            async function fetchCurrentUser() {
+                try {
+                    const response = await fetch('/current-user');
+                    if (response.ok) {
+                        const userData = await response.json();
+                        document.getElementById('username').value = userData.name;
+                    } else {
+                        console.error('Error fetching user information');
+                    }
+                } catch (error) {
+                    console.error('Error fetching current user:', error);
+                }
+            }
+
+            // Call the function to set the current user's name
+            fetchCurrentUser();
+
+            // Fetch and display reviews
+            async function loadReviews() {
+                try {
+                    const response = await fetch('/reviews');
+                    if (response.ok) {
+                        const reviews = await response.json();
+                        const reviewsContainer = document.getElementById('reviews');
+                        reviewsContainer.innerHTML = ''; // Clear previous reviews
+
+                        // Loop through the reviews and append them to the container
+                        reviews.forEach(review => {
+                            const reviewElement = document.createElement('div');
+                            reviewElement.classList.add('review');
+                            reviewElement.innerHTML = `
+                                <div class="review-header">
+                                    <span><strong>${review.username}</strong></span>
+                                    <span class="rating">${'⭐'.repeat(review.rating)}</span>
+                                </div>
+                                <div class="review-body">${review.comment}</div>
+                                <small>Posted on ${new Date(review.timestamp).toLocaleDateString()}</small>
+                            `;
+                            reviewsContainer.appendChild(reviewElement);
+                        });
+                    } else {
+                        console.error('Error fetching reviews');
+                    }
+                } catch (error) {
+                    console.error('Error loading reviews:', error);
+                }
+            }
+
+            // Load reviews on page load
+            loadReviews();
+
+            // Handle form submission (submit review to the server)
+            const form = document.getElementById('reviewForm');
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const newReview = {
+                    username: document.getElementById('username').value,
+                    comment: document.getElementById('comment').value,
+                    rating: document.getElementById('rating').value,
+                };
+
+                try {
+                    const response = await fetch('/submit-review', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(newReview),
+                    });
+
+                    if (response.ok) {
+                        alert('Review submitted successfully!');
+                        loadReviews(); // Reload reviews after submitting
+                    } else {
+                        console.error('Error submitting review');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+
+        
+    </script>
+
+    
+</body>
+{{> footer}}
+</html>

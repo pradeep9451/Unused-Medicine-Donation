@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+
+    <title>Medicine Donation Form</title>
+    <style>
+        /* Internal CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-image: url("image/login-bg.jpg");
+            width: 50%;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="number"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script>
+        // JavaScript to set the minimum expiry date and the maximum manufacture date
+        window.onload = function() {
+            // Set the minimum expiry date to 5 days after today
+            let today = new Date();
+            today.setDate(today.getDate() + 5);
+            let futureDate = today.toISOString().split('T')[0];
+            document.getElementById("expiryDate").setAttribute("min", futureDate); // Set the 'min' attribute for expiry date
+
+            // Set the maximum manufacture date to today
+            let currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+            document.getElementById("manufactureDate").setAttribute("max", currentDate); // Set the 'max' attribute for manufacture date
+        };
+
+        // JavaScript for form validation
+        function validateForm() {
+            let medicineName = document.forms["donationForm"]["medicineName"].value;
+            let medicineSerial = document.forms["donationForm"]["medicineSerial"].value;
+            let manufactureDate = document.forms["donationForm"]["manufactureDate"].value;
+            let expiryDate = document.forms["donationForm"]["expiryDate"].value;
+            let quantity = document.forms["donationForm"]["quantity"].value;
+            let donorName = document.forms["donationForm"]["donorName"].value;
+            let contact = document.forms["donationForm"]["contact"].value;
+            let email = document.forms["donationForm"]["email"].value;
+
+            if (medicineName === "") {
+                alert("Medicine name must be filled out");
+                return false;
+            }
+            if (medicineSerial === "") {
+                alert("Medicine serial number must be filled out");
+                return false;
+            }
+            if (manufactureDate === "") {
+                alert("Manufacture date must be selected");
+                return false;
+            }
+            if (expiryDate === "") {
+                alert("Expiry date must be selected");
+                return false;
+            }
+            if (new Date(manufactureDate) > new Date(expiryDate)) {
+                alert("Expiry date must be after the manufacture date");
+                return false;
+            }
+            if (quantity === "" || quantity <= 0) {
+                alert("Quantity must be a positive number");
+                return false;
+            }
+            if (donorName === "") {
+                alert("Donor name must be filled out");
+                return false;
+            }
+            if (contact === "" || !contact.match(/^\d{10}$/)) {
+                alert("Please enter a valid 10-digit contact number");
+                return false;
+            }
+            if (email === "") {
+                alert("Email must be filled out");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+    {{> header}}
+</head>
+<body>
+    {{> donernav}}
+    <div class="container">
+        <h2>Medicine Donation Form</h2>
+        <form action="/donate" method="POST" name="donationForm" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="medicineName">Medicine Name:</label>
+                <input type="text" id="medicineName" name="medicineName">
+            </div>
+            <div class="form-group">
+                <label for="medicineSerial">Medicine Serial No.:</label>
+                <input type="text" id="medicineSerial" name="medicineSerial">
+            </div>
+            <div class="form-group">
+                <label for="manufactureDate">Manufacture Date (Select from Calendar):</label>
+                <input type="date" id="manufactureDate" name="manufactureDate">
+            </div>
+            <div class="form-group">
+                <label for="expiryDate">Expiry Date (Select from Calendar):</label>
+                <input type="date" id="expiryDate" name="expiryDate">
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="1">
+            </div>
+            <!-- Donor Information Fields -->
+            <div class="form-group">
+                <label for="donorName">Donor Name:</label>
+                <input type="text" id="donorName" name="donorName">
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact Number:</label>
+                <input type="tel" id="contact" name="contact" pattern="\d{10}">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <input type="submit" value="Donate">
+        </form>
+    </div>
+</body>
+{{> footer}}
+</html>

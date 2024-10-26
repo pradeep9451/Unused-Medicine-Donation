@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styling */
+        #bodyh1 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2.5em;
+            color: #444;
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: zigzag 0.5s forwards; /* Zig-zag animation */
+        }
+
+        /* Zig-Zag Animation */
+        @keyframes zigzag {
+            0% {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            25% {
+                transform: translateX(25px);
+            }
+            50% {
+                transform: translateX(-15px);
+            }
+            75% {
+                transform: translateX(10px);
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Slider Container */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Slider Images */
+        .slider-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slider-images img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Navigation Buttons */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        /* Form Styling */
+        .donation-form {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 0;
+        }
+
+        .donation-form label {
+            margin: 10px 0 5px;
+        }
+
+        .donation-form input, .donation-form textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .donation-form button {
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .donation-form button:hover {
+            background-color: #4cae4c;
+        }
+
+        /* FAQ Section */
+        .faq {
+            margin: 20px 0;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .nav-button {
+                font-size: 16px;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .slider-container {
+                max-width: 90%;
+            }
+
+            .nav-button {
+                font-size: 14px;
+                padding: 6px;
+            }
+
+            /* Adjust image size for very small screens */
+            .slider-images img {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 id="bodyh1">Donate Unused Medicines</h1>
+
+    <div class="container">
+        <div class="slider-container">
+            <div class="slider-images" id="slider-images">
+                <img src="/image/donation.jpg" alt="Image 1">
+                <img src="/image/medicine.jpg" alt="Image 2">
+                <img src="/image/medications.jpg" alt="Image 3">
+            </div>
+            <button class="nav-button prev" onclick="prevSlide()">&#10094;</button>
+            <button class="nav-button next" onclick="nextSlide()">&#10095;</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>About Us</h2>
+            <p>We are dedicated to providing a platform for the donation of unused medicines to help those in need.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Contact Us</h2>
+            <p>If you have any questions or want to know more about our mission, feel free to reach out!
+                
+            </p>
+        </div>
+    </div>
+
+  
+    <div class="container">
+        <div class="section faq">
+            <h2>FAQs</h2>
+            <h4>1. What medicines can I donate?</h4>
+            <p>You can donate unused and unexpired medicines, including prescription medications, over-the-counter drugs, and more.</p>
+            <h4>2. How do I know if my donation is needed?</h4>
+            <p>We assess all donations based on current needs in the community and will inform you of the best practices.</p>
+            <h4>3. How do I contact you for more information?</h4>
+            <p>You can use the contact form above or email us directly at info@donation.org.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            const slides = document.getElementById('slider-images');
+            const totalSlides = slides.children.length;
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Optional: Auto slide
+        setInterval(nextSlide, 5000); // Change slide every 5 seconds
+
+        // Donation form submission handling
+        document.getElementById('donation-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page refresh
+            document.getElementById('success-message').style.display = 'block';
+            this.reset(); // Reset form fields
+        });
+    </script>
+</body>
+</html>

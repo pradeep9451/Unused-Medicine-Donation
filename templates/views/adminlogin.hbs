@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+
+    <title>Login Form</title>
+    {{>header}}
+    <style>
+        /* Basic styles for body */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("image/login-bg.jpg");
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensures the content takes at least full viewport height */
+            margin: 0;
+            padding: 0;
+            
+        }
+
+        /* Styles for the login container */
+        .login-container {
+            background-image: url("image/login-bg.jpg");
+
+            background-color: #fff;
+            padding: 20px; /* Changed padding for smaller screens */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%; /* Use 90% of the screen width */
+            max-width: 400px; /* Max width for larger screens */
+            margin-top: 90px;
+            
+        }
+
+        /* Styles for headings and text */
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login-container label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        /* Styles for input fields */
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Styles for buttons */
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            
+        }
+
+        .login-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive media query for small screens */
+        @media (max-width: 600px) {
+            .login-container {
+                padding: 15px; /* Reduce padding for mobile devices */
+                margin-top: 50px; /* Less margin at the top on smaller screens */
+            }
+
+            .login-container h2 {
+                font-size: 20px;
+            }
+
+            .login-container input[type="text"],
+            .login-container input[type="password"] {
+                padding: 10px; /* Adjust padding for inputs on small screens */
+                font-size: 14px;
+            }
+
+            .login-container button {
+                padding: 10px;
+                font-size: 14px; /* Make the button smaller on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    {{> navbar}}
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        <form action="/adminlogin" method="POST">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+{{> footer}}
+
+<script>
+    // Check if the flag for login success is set
+    {{#if logoutSuccess}}
+      alert("You have been successfully logged out.");
+    {{/if}}
+</script>
+</html>

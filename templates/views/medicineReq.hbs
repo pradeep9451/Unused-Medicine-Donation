@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+  <title>Medicine Requests</title>
+  <style>
+    /* Internal CSS for styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin: 20px 0;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto; /* Allows horizontal scrolling on small screens */
+      margin: 20px auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+      word-wrap: break-word; /* Allows text to wrap in cells */
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #ddd;
+    }
+
+    .delete-btn {
+      color: white;
+      background-color: #e74c3c;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 24px;
+      }
+      table {
+        font-size: 14px;
+      }
+      .delete-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 20px;
+      }
+      table {
+        font-size: 12px;
+      }
+      .delete-btn {
+        padding: 3px 6px;
+        font-size: 10px;
+      }
+
+      td img {
+        width: 60px; /* Reduce image size for smaller screens */
+        height: auto;
+      }
+    }
+  </style>
+</head>
+{{> header}}
+<body>
+  {{> adminnav}}
+  <h1>Medicine Requests</h1>
+  
+  {{#if reqs.length}}
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Medicine Name</th>
+            <th>Quantity</th>
+            <th>Details</th>
+            <th>Prescription Photo</th> <!-- Column for prescription photo -->
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each reqs}}
+            <tr>
+              <td>{{this.name}}</td>
+              <td>{{this.email}}</td>
+              <td>{{this.phone}}</td>
+              <td>{{this.medicine}}</td>
+              <td>{{this.quantity}}</td>
+              <td>{{this.details}}</td>
+              <td>
+                {{#if this.prescription}}
+                  <img src="/{{this.prescription}}" alt="Prescription" style="width: 100px; height: auto;">
+                  <a href="/{{this.prescription}}" download style="display: inline-block; margin-top: 10px; padding: 5px 10px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Download</a>                {{else}}
+                  No photo uploaded
+                {{/if}}
+              </td>
+              <td>
+                <form action="/delete-request/{{this._id}}" method="POST" style="display: inline;">
+                  <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this request?');">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{else}}
+    <p style="text-align: center; color: #666;">No medicine requests found.</p>
+  {{/if}}
+</body>
+{{> footer}}
+</html>

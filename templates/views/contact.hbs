@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/medicine_icon.png" type="image/x-icon">
+    <title>Contact Form</title>
+    <style>
+        /* Internal CSS for styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .contact-form {
+            background-image: url("image/login-bg.jpg");
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .contact-form h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+        }
+
+        .contact-form label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            color: #333;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .success-message, .error-message {
+            display: none;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .contact-form {
+                padding: 15px;
+            }
+
+            .contact-form h2 {
+                font-size: 20px;
+            }
+
+            .contact-form input,
+            .contact-form textarea {
+                font-size: 16px;
+            }
+
+            .contact-form button {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-form {
+                padding: 10px;
+            }
+
+            .contact-form h2 {
+                font-size: 18px;
+            }
+
+            .contact-form input,
+            .contact-form textarea {
+                font-size: 14px;
+            }
+
+            .contact-form button {
+                font-size: 12px;
+            }
+        }
+    </style>
+    {{> header}}
+</head>
+<body>
+    {{> navbar}}
+    <div class="contact-form">
+        <h2>Contact Us for Medicine Donation</h2>
+        <div class="success-message" id="success-message">Thank you for your message. We will get back to you soon!</div>
+        <div class="error-message" id="error-message">Please fill out all required fields.</div>
+        <form action="contact" method="POST" id="contactForm" onsubmit="return validateForm()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript for form validation
+        function validateForm() {
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var phone = document.getElementById('phone').value;
+            var message = document.getElementById('message').value;
+            var successMessage = document.getElementById('success-message');
+            var errorMessage = document.getElementById('error-message');
+
+            if (name === "" || email === "" || phone === "" || message === "") {
+                errorMessage.style.display = "block";
+                successMessage.style.display = "none";
+                return false; // Prevent form submission if fields are empty
+            } else {
+                errorMessage.style.display = "none";
+                successMessage.style.display = "block";
+                return true; // Allow form submission if validation passes
+            }
+        }
+    </script>
+    {{> footer}}
+</body>
+</html>
