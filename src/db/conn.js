@@ -1,9 +1,14 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/yadav")
-    .then(() => {
-        console.log("Connection is successful");
-    })
-    .catch((e) => {
-        console.log("No connection", e); // Including error message for more clarity
-    });
+const mongoURI = process.env.MONGO_URI;
+
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => {
+    console.log("Connection to MongoDB Atlas successful");
+})
+.catch((e) => {
+    console.error("Connection failed:", e);
+});
